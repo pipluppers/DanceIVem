@@ -18,17 +18,20 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        // Temporary
+        startActivity(new Intent(this, DatesActivity.class));
+
         // Start the next activity after this brief splash screen
-        Handler handler = new Handler();
-        final Intent intent = new Intent(this, LoginActivity.class);
-        handler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                startActivity(intent);
-            }
-        }, 3000);   // Start after 3 seconds
+//        Handler handler = new Handler();
+//        final Intent intent = new Intent(this, LoginActivity.class);
+//        handler.postDelayed(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                startActivity(intent);
+//            }
+//        }, 3000);   // Start after 3 seconds
     }
 
     // Called when app is about to come visible

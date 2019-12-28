@@ -3,12 +3,16 @@ package com.danceivem.danceivem;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ExpandableListView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class ClassesActivity extends AppCompatActivity {
+
+    private ExpandableListView expandableListView;
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
@@ -27,27 +31,19 @@ public class ClassesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int position = intent.getIntExtra(DatesActivity.POSITION, 0);
 
-        // Based off this position, grab the information for the cards
+        expandableListView = findViewById(R.id.classCardsExpandableListView);
+
         CreateClassCards();
-        BuildRecyclerView();
+
+        ClassAdapter classAdapter = new ClassAdapter(ClassesActivity.this, mClassCards);
+        expandableListView.setAdapter(classAdapter);
+
     }
 
     // TODO: Get new images for the choreographers
     public void CreateClassCards() {
-        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Melissa"));
-        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani"));
-        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri"));
+        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Melissa", "Details 1"));
+        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani", "Details 2"));
+        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri", "Details 3"));
     }
-
-    public void BuildRecyclerView() {
-        mRecyclerView = findViewById(R.id.activity_classes__RecyclerView);
-        // Set to true if we know Recycler View won't change in size
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ClassAdapter(mClassCards);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
 }
