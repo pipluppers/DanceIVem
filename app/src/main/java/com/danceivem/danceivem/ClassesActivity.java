@@ -1,10 +1,10 @@
 package com.danceivem.danceivem;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -15,6 +15,7 @@ public class ClassesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ClassAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private int expandedPosition = RecyclerView.NO_POSITION;    // pos of expanded card
     // end private members ---------------------------------
 
     @Override

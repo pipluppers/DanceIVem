@@ -1,7 +1,7 @@
 package com.danceivem.danceivem;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +24,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
 
     // static because it's an inner class of ClassAdapter
     public static class ClassViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTextView;
+        private ImageView mImageView;
+        private TextView mTextView;
 
         public ClassViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -55,10 +55,10 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     @Override
     public ClassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_dates, parent, false);
-        ClassViewHolder cvh = new ClassViewHolder(view, mListener);
-        return cvh;
+        return new ClassViewHolder(view, mListener);
     }
 
+    // Called by RecyclerView to display the data at the input position
     @Override
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
         ClassCard currentCard = mClassCards.get(position);
