@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -113,8 +112,8 @@ public class ClassAdapter extends BaseExpandableListAdapter {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Open Venmo
-                String venmo = "https://venmo.com";
+                // Open Venmo to Melissa's page
+                String venmo = "https://venmo.com/Melissa-Barrera-13";
                 Uri venmoAddress = Uri.parse(venmo);
 
                 Intent openVenmo = new Intent(Intent.ACTION_VIEW, venmoAddress);

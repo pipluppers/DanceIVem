@@ -16,10 +16,7 @@ public class ClassesActivity extends AppCompatActivity {
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
-    private RecyclerView mRecyclerView;
     private ClassAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private int expandedPosition = RecyclerView.NO_POSITION;    // pos of expanded card
     // end private members ---------------------------------
 
     @Override
@@ -33,7 +30,7 @@ public class ClassesActivity extends AppCompatActivity {
 
         expandableListView = findViewById(R.id.classCardsExpandableListView);
 
-        CreateClassCards();
+        CreateClassCards(position);
 
         ClassAdapter classAdapter = new ClassAdapter(ClassesActivity.this, mClassCards);
         expandableListView.setAdapter(classAdapter);
@@ -41,9 +38,17 @@ public class ClassesActivity extends AppCompatActivity {
     }
 
     // TODO: Get new images for the choreographers
-    public void CreateClassCards() {
-        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Melissa", "Details 1"));
-        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani", "Details 2"));
-        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri", "Details 3"));
+    // TODO: Use a database for this
+    public void CreateClassCards(int position) {
+        if (position == 0) {
+            mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Melissa", "Details 1"));
+            mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani", "Details 2"));
+            mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri", "Details 3"));
+        }
+        else if (position == 1) {
+            mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Melissa", "Details 4"));
+            mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani", "Details 5"));
+            mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri", "Details 6"));
+        }
     }
 }
