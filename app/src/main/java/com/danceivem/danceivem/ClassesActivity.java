@@ -33,6 +33,7 @@ public class ClassesActivity extends AppCompatActivity {
 
     // TODO: Get new images for the choreographers
     public void CreateClassCards() {
+        mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "All Classes"));
         mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Melissa"));
         mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani"));
         mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri"));
