@@ -9,6 +9,7 @@
     <string name="splash_desc">DanceIVem Logo</string>
     <string name="settings">Settings</string>
     <string name="username">Username</string>
+    <string name="venmo">Venmo</string>
 
     <string-array name="classes">
         <item>Class1</item>

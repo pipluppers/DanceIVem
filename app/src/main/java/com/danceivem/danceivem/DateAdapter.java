@@ -1,7 +1,7 @@
 package com.danceivem.danceivem;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,10 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     private ArrayList<DateCard> mDateCards;
     private OnItemClickListener mListener;
 
+    public DateAdapter(ArrayList<DateCard> dateCards) {
+        mDateCards = dateCards;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -23,6 +27,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     }
 
     // static because it's an inner class of DateAdapter
+    // Provides a reference to the views for each data item
     public static class DateViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView;
@@ -47,18 +52,17 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
         }
     }
 
-    public DateAdapter(ArrayList<DateCard> dateCards) {
-        mDateCards = dateCards;
-    }
-
+    // Create new views
     @NonNull
     @Override
     public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_dates, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_datecards,
+                parent, false);
         DateViewHolder dvh = new DateViewHolder(view, mListener);
         return dvh;
     }
 
+    // Replace the contents of a view
     @Override
     public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
         DateCard currentCard = mDateCards.get(position);

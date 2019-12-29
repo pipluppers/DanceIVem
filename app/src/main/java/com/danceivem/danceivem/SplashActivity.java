@@ -1,7 +1,7 @@
 package com.danceivem.danceivem;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,9 +18,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
-        Intent intent = new Intent(this, DatesActivity.class);
-        startActivity(intent);
+        // Temporary
+        startActivity(new Intent(this, DatesActivity.class));
 
 //        // Start the next activity after this brief splash screen
 //        Handler handler = new Handler();
