@@ -2,6 +2,8 @@ package com.danceivem.danceivem;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 
@@ -12,11 +14,13 @@ import java.util.ArrayList;
 
 public class ClassesActivity extends AppCompatActivity {
 
-    private ExpandableListView expandableListView;
+    private ExpandableListView mExpandableListView;
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
     private ClassAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     // end private members ---------------------------------
 
     @Override
@@ -28,13 +32,8 @@ public class ClassesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int position = intent.getIntExtra(DatesActivity.POSITION, 0);
 
-        expandableListView = findViewById(R.id.classCardsExpandableListView);
-
         CreateClassCards(position);
-
-        ClassAdapter classAdapter = new ClassAdapter(ClassesActivity.this, mClassCards);
-        expandableListView.setAdapter(classAdapter);
-
+        BuildListView();
     }
 
     // TODO: Get new images for the choreographers
@@ -50,5 +49,21 @@ public class ClassesActivity extends AppCompatActivity {
             mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani", "Details 5"));
             mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri", "Details 6"));
         }
+    }
+
+    public void BuildListView() {
+        mRecyclerView = findViewById(R.id.activity_classes__RecyclerView);
+        mRecyclerView.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ClassAdapter(mClassCards);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // Set up on-click event
+        mAdapter.setOnItemClickListener(new ClassAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Expand the class card at this position
+            }
+        });
     }
 }
