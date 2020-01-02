@@ -3,10 +3,17 @@ package com.danceivem.danceivem;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +22,9 @@ import java.util.ArrayList;
 public class ClassesActivity extends AppCompatActivity {
 
     private ExpandableListView mExpandableListView;
+    private ConstraintLayout mConstraintLayout;
+    private Button mButton;
+    private CardView mCardView;
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
@@ -34,6 +44,23 @@ public class ClassesActivity extends AppCompatActivity {
 
         CreateClassCards(position);
         BuildListView();
+
+        mConstraintLayout = findViewById(R.id.expandableView);
+        mButton = findViewById(R.id.classesButton);
+        mCardView = findViewById(R.id.classesCardView);
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mConstraintLayout.getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+                    mConstraintLayout.setVisibility(View.VISIBLE);
+                } else {
+                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+                    mConstraintLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     // TODO: Get new images for the choreographers
