@@ -21,6 +21,12 @@ import java.util.ArrayList;
 
 public class ClassesActivity extends AppCompatActivity {
 
+    // Need a class card with
+    //  - the image
+    //  - the details
+    //  - the choreographer's name
+
+
     private ExpandableListView mExpandableListView;
     private ConstraintLayout mConstraintLayout;
     private Button mButton;
