@@ -38,12 +38,14 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
 
     // Provides a reference to the views for each data item
     public static class ClassViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView;
+        private TextView mTeacherNameTextView;
+        private TextView mDetailsTextVIew;
 
         public ClassViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
 
-            mTextView = itemView.findViewById(R.id.classTextView);
+            mTeacherNameTextView = itemView.findViewById(R.id.teacherNameTextView);
+            mDetailsTextVIew = itemView.findViewById(R.id.detailsTextView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,7 +65,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     @Override
     public ClassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_classcards,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_classescards,
                 parent, false);
         return new ClassViewHolder(view, mListener);
     }
@@ -72,7 +74,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
         ClassCard currentCard = mClassCards.get(position);
 
-        holder.mTextView.setText(currentCard.getTeacherName());
+        holder.mTeacherNameTextView.setText(currentCard.getTeacherName());
+        holder.mDetailsTextVIew.setText(currentCard.getDetails());
     }
 
     @Override

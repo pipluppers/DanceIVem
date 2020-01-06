@@ -11,6 +11,7 @@ import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -31,6 +32,7 @@ public class ClassesActivity extends AppCompatActivity {
     private ConstraintLayout mConstraintLayout;
     private Button mButton;
     private CardView mCardView;
+    private TextView mDetailsTextView;
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
@@ -55,6 +57,7 @@ public class ClassesActivity extends AppCompatActivity {
         mButton = findViewById(R.id.classesButton);
         mCardView = findViewById(R.id.classesCardView);
 
+        // Expands and contracts on click
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,13 +93,5 @@ public class ClassesActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new ClassAdapter(mClassCards);
         mRecyclerView.setAdapter(mAdapter);
-
-        // Set up on-click event
-        mAdapter.setOnItemClickListener(new ClassAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                // Expand the class card at this position
-            }
-        });
     }
 }
