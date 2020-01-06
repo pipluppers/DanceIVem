@@ -18,6 +18,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
         mDateCards = dateCards;
     }
 
+    // Defined in DatesActivity lambda call
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -26,8 +27,8 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
         mListener = listener;
     }
 
-    // static because it's an inner class of DateAdapter
     // Provides a reference to the views for each data item
+    // static because it's an inner class of DateAdapter
     public static class DateViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView;
@@ -58,8 +59,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_datecards,
                 parent, false);
-        DateViewHolder dvh = new DateViewHolder(view, mListener);
-        return dvh;
+        return new DateViewHolder(view, mListener);
     }
 
     // Replace the contents of a view

@@ -2,9 +2,19 @@ package com.danceivem.danceivem;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.ExpandableListView;
 
+import android.opengl.Visibility;
+import android.os.Build;
+import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,11 +22,23 @@ import java.util.ArrayList;
 
 public class ClassesActivity extends AppCompatActivity {
 
-    private ExpandableListView expandableListView;
+    // Need a class card with
+    //  - the image
+    //  - the details
+    //  - the choreographer's name
+
+
+    private ExpandableListView mExpandableListView;
+    private ConstraintLayout mConstraintLayout;
+    private Button mButton;
+    private CardView mCardView;
+    private TextView mDetailsTextView;
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
     private ClassAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     // end private members ---------------------------------
 
     @Override
@@ -28,13 +50,26 @@ public class ClassesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int position = intent.getIntExtra(DatesActivity.POSITION, 0);
 
-        expandableListView = findViewById(R.id.classCardsExpandableListView);
-
         CreateClassCards(position);
+        BuildListView();
 
-        ClassAdapter classAdapter = new ClassAdapter(ClassesActivity.this, mClassCards);
-        expandableListView.setAdapter(classAdapter);
+        mConstraintLayout = findViewById(R.id.expandableView);
+        mButton = findViewById(R.id.classesButton);
+        mCardView = findViewById(R.id.classesCardView);
 
+        // Expands and contracts on click
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mConstraintLayout.getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+                    mConstraintLayout.setVisibility(View.VISIBLE);
+                } else {
+                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+                    mConstraintLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     // TODO: Get new images for the choreographers
@@ -50,5 +85,13 @@ public class ClassesActivity extends AppCompatActivity {
             mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Leilani", "Details 5"));
             mClassCards.add(new ClassCard(R.drawable.dance_iv_em, "Bri", "Details 6"));
         }
+    }
+
+    public void BuildListView() {
+        mRecyclerView = findViewById(R.id.activity_classes__RecyclerView);
+        mRecyclerView.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ClassAdapter(mClassCards);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }
