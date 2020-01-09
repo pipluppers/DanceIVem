@@ -1,5 +1,6 @@
 package com.danceivem.danceivem;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -118,8 +120,14 @@ public class ClassesActivity extends AppCompatActivity {
                 PackageManager packageManager = mContext.getPackageManager();
                 Intent intent = new Intent();
                 if (isVenmoInstalled(venmoPackageName, packageManager)) {
-                    // TODO: Open the Venmo App
+                    // Open Venmo app
+                    try {
+                        startActivity(new Intent(venmoPackageName));
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
+                    // Open webpage
                     Uri webAddress = Uri.parse("https://venmo.com");
 
                     // Create the intent for the new activity
