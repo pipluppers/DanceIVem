@@ -52,7 +52,7 @@ public class ClassesActivity extends AppCompatActivity {
 
         CreateClassCards(position);
         BuildListView();
-        CreateVenmoLink();
+        //CreateVenmoLink();
 //
 //        // Expands and contracts on click
 //        mButton.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +90,7 @@ public class ClassesActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new ClassAdapter(mClassCards);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mExpandableView = findViewById(R.id.expandableView);
         mButton = findViewById(R.id.classesButton);
@@ -112,6 +113,7 @@ public class ClassesActivity extends AppCompatActivity {
 
     public void CreateVenmoLink()
     {
+        // TODO: Crashes
         mVenmoButton = findViewById(R.id.venmoButton);
         final String venmoPackageName = "com.Venmo";
         mVenmoButton.setOnClickListener(new View.OnClickListener() {

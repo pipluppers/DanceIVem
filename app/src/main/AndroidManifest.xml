@@ -12,7 +12,7 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,12 +21,6 @@
 
         <activity android:name=".ClassesActivity"
             android:parentActivityName=".DatesActivity">
-            <!-- Support for Parent Activity Name for API levels 4 - 16
-                    <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".SplashActivity"/>
-        </activity>
-            -->
         </activity>
     </application>
 
