@@ -1,8 +1,12 @@
 package com.danceivem.danceivem;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,18 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ClassesActivity extends AppCompatActivity {
-
-    // Need a class card with
-    //  - the image
-    //  - the details
-    //  - the choreographer's name
-
-
-    private ExpandableListView mExpandableListView;
-    private ConstraintLayout mConstraintLayout;
+    private ConstraintLayout mExpandableView;
     private Button mButton;
+    private Button mVenmoButton;
     private CardView mCardView;
     private TextView mDetailsTextView;
+    private Context mContext;
 
     // private members -------------------------------------
     private ArrayList<ClassCard> mClassCards = new ArrayList<>();
@@ -45,6 +44,7 @@ public class ClassesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes);
+        mContext = this;
 
         // Get the intent that started this activity
         Intent intent = getIntent();
@@ -52,24 +52,21 @@ public class ClassesActivity extends AppCompatActivity {
 
         CreateClassCards(position);
         BuildListView();
-
-        mConstraintLayout = findViewById(R.id.expandableView);
-        mButton = findViewById(R.id.classesButton);
-        mCardView = findViewById(R.id.classesCardView);
-
-        // Expands and contracts on click
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mConstraintLayout.getVisibility() == View.GONE) {
-                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
-                    mConstraintLayout.setVisibility(View.VISIBLE);
-                } else {
-                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
-                    mConstraintLayout.setVisibility(View.GONE);
-                }
-            }
-        });
+        CreateVenmoLink();
+//
+//        // Expands and contracts on click
+//        mButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mConstraintLayout.getVisibility() == View.GONE) {
+//                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+//                    mConstraintLayout.setVisibility(View.VISIBLE);
+//                } else {
+//                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+//                    mConstraintLayout.setVisibility(View.GONE);
+//                }
+//            }
+//        });
     }
 
     // TODO: Get new images for the choreographers
@@ -93,5 +90,64 @@ public class ClassesActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new ClassAdapter(mClassCards);
         mRecyclerView.setAdapter(mAdapter);
+
+        mExpandableView = findViewById(R.id.expandableView);
+        mButton = findViewById(R.id.classesButton);
+        mCardView = findViewById(R.id.classesCardView);
+
+        mAdapter.setOnItemClickListener(new ClassAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Expand or collapse expandable view
+                if (mExpandableView.getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+                    mExpandableView.setVisibility(View.VISIBLE);
+                } else {
+                    TransitionManager.beginDelayedTransition(mCardView, new AutoTransition());
+                    mExpandableView.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    public void CreateVenmoLink()
+    {
+        mVenmoButton = findViewById(R.id.venmoButton);
+        final String venmoPackageName = "com.Venmo";
+        mVenmoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PackageManager packageManager = mContext.getPackageManager();
+                Intent intent = new Intent();
+                if (isVenmoInstalled(venmoPackageName, packageManager)) {
+                    // Open Venmo app
+                    try {
+                        startActivity(new Intent(venmoPackageName));
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Open webpage
+                    Uri webAddress = Uri.parse("https://venmo.com");
+
+                    // Create the intent for the new activity
+                    Intent goToVenmo = new Intent(Intent.ACTION_VIEW, webAddress);
+                    if (goToVenmo.resolveActivity(mContext.getPackageManager()) != null) {
+                        startActivity(goToVenmo);
+                    }
+                }
+
+            }
+        });
+    }
+
+    // Helper functions
+    private Boolean isVenmoInstalled(String venmoPackageName, PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo(venmoPackageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }
